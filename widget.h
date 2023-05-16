@@ -37,6 +37,12 @@ public:
 
     void int2Chars(char str[],long long int a,int &length);
 
+    void send_data();
+
+    char convertHexChart(char ch);
+
+    void StringToHex(QString str, QByteArray &senddata);
+
     ~Widget();
 
 private slots:
