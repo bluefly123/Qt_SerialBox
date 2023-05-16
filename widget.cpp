@@ -11,41 +11,20 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QChart *chart_realTime = Chart_Init();
 
-    QChartView *chartView = new QChartView(); // ui->tab_2
-    QPushButton *button_Test = new QPushButton;
+    addGraphPage();
+    timerDrawLine->start(100);//刷新时间设置
+    qDebug()<<"开始刷新"<<endl;
+    connect(timerDrawLine, SIGNAL(timeout()), this, SLOT(DrawLine_refresh(series_main, chart_main)));
+    qDebug()<<"开始刷新111"<<endl;
 
-    QVBoxLayout *QVBoxLayout_graphPage = new QVBoxLayout;             // tab2的布局
-    QHBoxLayout *QHBoxLayout_graphPage_buttonGroup = new QHBoxLayout; // 按钮布局
-    QPushButton *button_graphPage_pause = new QPushButton;
-    QPushButton *button_graphPage_clear = new QPushButton;
-    QWidget *widget_graphPage = new QWidget;             // tab2的widget
-    QWidget *widget_graphPage_buttonGroup = new QWidget; // tab2的widget
 
-    //    //主要布局为一个tabWidget
-    //    mainLayout->addWidget(ui->tabWidget);
-    //    //设置tab1界面的布局-使用QtDesigner设计
 
-    //    //设置tab2界面的布局
-    button_graphPage_pause->setText("暂停");
-    button_graphPage_clear->setText("清除");
-
-    QHBoxLayout_graphPage_buttonGroup->addWidget(button_graphPage_pause);
-    QHBoxLayout_graphPage_buttonGroup->addWidget(button_graphPage_clear);
-    widget_graphPage_buttonGroup->setLayout(QHBoxLayout_graphPage_buttonGroup);
-    button_Test->setText("测试");
-    chartView->setChart(chart_realTime);                            // 将chart添加到View
-    QVBoxLayout_graphPage->addWidget(chartView);                    // 添加chartView到widget
-    QVBoxLayout_graphPage->addWidget(button_Test);                  // 添加按钮到widget
-    QVBoxLayout_graphPage->addWidget(widget_graphPage_buttonGroup); // 添加按钮组到widget
-
-    widget_graphPage->setLayout(QVBoxLayout_graphPage); // 将布局添加进widget
-    ui->tabWidget->addTab(widget_graphPage, "图形显示");
 }
 
 QChart *Widget::Chart_Init()
 {
+
     // 初始化QChart的实例
     QChart *chart;
     QSplineSeries *lineSeries;
@@ -82,6 +61,11 @@ QChart *Widget::Chart_Init()
     // 把曲线关联到坐标轴
     lineSeries->attachAxis(axisX);
     lineSeries->attachAxis(axisY);
+
+    chart_main = chart;
+    series_main = lineSeries;
+
+
     // 把chart显示到窗口上
     // ui->graphicsView->setChart(chart);
     //  设置渲染：抗锯齿，如果不设置那么曲线就显得不平滑
@@ -119,6 +103,9 @@ void Widget::int2Chars(char str[], long long int a, int &length)
     return;
 }
 
+
+
+
 // 按下刷新按钮，检查可用串口
 void Widget::on_pushButton_refreshSerial_clicked()
 {
@@ -139,6 +126,9 @@ void Widget::on_pushButton_refreshSerial_clicked()
     }
     ui->checkBox_openSerial->setEnabled(true); // 使能打开串口
 }
+
+
+
 // 开启按钮 按下
 void Widget::on_checkBox_openSerial_toggled(bool checked)
 {
@@ -182,6 +172,8 @@ void Widget::on_checkBox_openSerial_toggled(bool checked)
     }
 }
 
+
+
 void Widget::on_readSerial()
 {
     static unsigned counter = 0;
@@ -201,6 +193,35 @@ void Widget::on_readSerial()
 
     //connect(&uSerial,&QSerialPort::readyRead,this,&serial::uSerialReceiveHandle);
 }
+
+
+
+
+void Widget::DrawLine_refresh(QLineSeries * lineSeries_DrawLine, QChart * chart_drawLine)
+{
+
+    static int count = 0;
+    qDebug()<<"图像刷新"<<count;
+    if(count > MAX_X)
+    {
+        //当曲线上最早的点超出X轴的范围时，剔除最早的点，
+        lineSeries_DrawLine->removePoints(0,lineSeries_DrawLine->count() - MAX_X);
+        // 更新X轴的范围
+
+        chart_drawLine->axisX()->setRange(count - MAX_X, count);
+
+        //m_chart->axisX()->setMin(count - MAX_X);
+        //m_chart->axisX()->setMax(count);
+    }
+    //增加新的点到曲线末端
+    lineSeries_DrawLine->append(QPointF(count,100)) ;
+    //series1->append(QPointF(0,qrand()%200)) ;
+    count ++;
+}
+
+
+
+
 void Widget::send_data(){
     QString message = ui->lineEdit_sendEdit->text();
     QByteArray messageSend;
@@ -247,6 +268,41 @@ void Widget::StringToHex(QString str, QByteArray &senddata)
         hexdatalen++;
     }
     senddata.resize(hexdatalen);
+}
+
+void Widget::addGraphPage()
+{
+    QChartView *chartView = new QChartView(); // ui->tab_2
+    QPushButton *button_Test = new QPushButton;
+    QChart *chart_realTime = Chart_Init();
+    QVBoxLayout *QVBoxLayout_graphPage = new QVBoxLayout;             // tab2的布局
+    QHBoxLayout *QHBoxLayout_graphPage_buttonGroup = new QHBoxLayout; // 按钮布局
+    QPushButton *button_graphPage_pause = new QPushButton;
+    QPushButton *button_graphPage_clear = new QPushButton;
+    QWidget *widget_graphPage = new QWidget;             // tab2的widget
+    QWidget *widget_graphPage_buttonGroup = new QWidget; // tab2的widget
+
+
+
+    //    //主要布局为一个tabWidget
+    //    mainLayout->addWidget(ui->tabWidget);
+    //    //设置tab1界面的布局-使用QtDesigner设计
+
+    //    //设置tab2界面的布局
+    button_graphPage_pause->setText("暂停");
+    button_graphPage_clear->setText("清除");
+
+    QHBoxLayout_graphPage_buttonGroup->addWidget(button_graphPage_pause);
+    QHBoxLayout_graphPage_buttonGroup->addWidget(button_graphPage_clear);
+    widget_graphPage_buttonGroup->setLayout(QHBoxLayout_graphPage_buttonGroup);
+    button_Test->setText("测试");
+    chartView->setChart(chart_realTime);                            // 将chart添加到View
+    QVBoxLayout_graphPage->addWidget(chartView);                    // 添加chartView到widget
+    QVBoxLayout_graphPage->addWidget(button_Test);                  // 添加按钮到widget
+    QVBoxLayout_graphPage->addWidget(widget_graphPage_buttonGroup); // 添加按钮组到widget
+
+    widget_graphPage->setLayout(QVBoxLayout_graphPage); // 将布局添加进widget
+    ui->tabWidget->addTab(widget_graphPage, "图形显示");
 }
 
 //数据转换 字符串转16进制数据处理
