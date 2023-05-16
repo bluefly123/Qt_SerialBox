@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Widget</class>
+ <widget class="QWidget" name="Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>820</width>
+    <height>577</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Widget</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab_1">
+      <attribute name="title">
+       <string>基本配置</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="5" column="1">
+        <widget class="QComboBox" name="comboBox_stopBit"/>
+       </item>
+       <item row="6" column="4">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>341</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="6" column="1">
+        <widget class="QComboBox" name="comboBox_checkBit"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QComboBox" name="comboBox_baudRate"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="QComboBox" name="comboBox_serialPort"/>
+       </item>
+       <item row="4" column="2">
+        <widget class="QCheckBox" name="checkBox_HexReceive">
+         <property name="text">
+          <string>Hex接收</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QLineEdit" name="lineEdit_cycleTimeSet">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_serialPort">
+         <property name="text">
+          <string>端口</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_baudRate">
+         <property name="text">
+          <string>波特率</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_stopBit">
+         <property name="text">
+          <string>停止位</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QPushButton" name="pushButton_sendOnceManual">
+         <property name="text">
+          <string>发送</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_flowControl">
+         <property name="text">
+          <string>流控制</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QCheckBox" name="checkBox_HexSend">
+         <property name="text">
+          <string>Hex发送</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QComboBox" name="comboBox_flowControl"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_checkBit">
+         <property name="text">
+          <string>校验位</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="3" colspan="2">
+        <widget class="QLineEdit" name="lineEdit_sendEdit"/>
+       </item>
+       <item row="6" column="2">
+        <widget class="QCheckBox" name="checkBox_timeCycleSend">
+         <property name="text">
+          <string>定时发送(ms)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QPushButton" name="pushButton_refreshSerial">
+         <property name="text">
+          <string>刷新串口</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QCheckBox" name="checkBox_openSerial">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 75 12pt &quot;Adobe Arabic&quot;;
+border-color: rgb(0, 0, 0);</string>
+         </property>
+         <property name="text">
+          <string>开启串口</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="5">
+        <widget class="QPlainTextEdit" name="plainTextEdit_receiveDataShow"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>解析设置</string>
+      </attribute>
+      <widget class="QSpinBox" name="spinBox_varNumber">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>150</y>
+         <width>42</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="wrapping">
+        <bool>false</bool>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::PlusMinus</enum>
+       </property>
+       <property name="correctionMode">
+        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_varNumber">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>150</y>
+         <width>72</width>
+         <height>15</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>变量个数</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>220</y>
+         <width>88</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>确定</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>comboBox_serialPort</tabstop>
+  <tabstop>comboBox_baudRate</tabstop>
+  <tabstop>comboBox_stopBit</tabstop>
+  <tabstop>comboBox_checkBit</tabstop>
+  <tabstop>comboBox_flowControl</tabstop>
+  <tabstop>checkBox_HexReceive</tabstop>
+  <tabstop>checkBox_HexSend</tabstop>
+  <tabstop>checkBox_timeCycleSend</tabstop>
+  <tabstop>pushButton_sendOnceManual</tabstop>
+  <tabstop>lineEdit_cycleTimeSet</tabstop>
+  <tabstop>lineEdit_sendEdit</tabstop>
+  <tabstop>checkBox_openSerial</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>plainTextEdit_receiveDataShow</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
